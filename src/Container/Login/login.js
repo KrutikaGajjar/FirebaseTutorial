@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState,useRef } from 'react'
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -8,18 +8,57 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router'
+import AlertBox from '../../Components/Alert/alert';
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
+import CustomLink from '../../Components/Link/customLink';
 
 const theme = createTheme();
 export default function Login() {
 
+  const [userInfo, setUserInfo] = useState({ email: '', password: '' });
+  const [alert, setAlert] = useState({visible:false, severity:'', message:''});
+  const router = useNavigate();
+  const timerRef = useRef(null);
+
 const handleSubmit = (event) => {
     event.preventDefault();
-
- };
+  signInWithEmailAndPassword(auth, userInfo.email, userInfo.password)
+    .then(userInformation => {
+      console.log(userInformation);
+      router('/')
+    })
+    .catch(error => {
+    setAlert({ visible:true,severity:'error',message:error.message})
+        console.log(error.code);
+        timerRef.current= setTimeout(() => {
+          setAlert({ visible:false,severity:'',message:''})
+        },2000)
+  })
+};
+  
+  const handlePassword = () => {
+    sendPasswordResetEmail(auth, userInfo.email)
+      .then(() => {
+        setAlert({ visible: true, severity: 'success', message: 'Email Sent Successfully' })
+         timerRef.current= setTimeout(() => {
+          setAlert({ visible:false,severity:'',message:''})
+        },2000)
+      })
+      .catch(error => {
+      setAlert({ visible:true,severity:'error',message:error.message})
+        console.log(error.code);
+        timerRef.current= setTimeout(() => {
+          setAlert({ visible:false,severity:'',message:''})
+        },2000)
+    })
+  }
     
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
+        <AlertBox visible={alert.visible} severity={alert.severity} message={alert.message}/>
         <CssBaseline />
         <Box
           sx={{
@@ -43,6 +82,8 @@ const handleSubmit = (event) => {
               name="email"
               autoComplete="email"
               autoFocus
+              value={userInfo.email}
+              onChange={(event)=>{setUserInfo({...userInfo,email:event.target.value})}}
             />
             <TextField
               margin="normal"
@@ -53,6 +94,8 @@ const handleSubmit = (event) => {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={userInfo.password}
+              onChange={(event)=>{setUserInfo({...userInfo,password:event.target.value})}}
             />
             <Button
               type="submit"
@@ -64,9 +107,7 @@ const handleSubmit = (event) => {
             </Button>
             <Grid container>
               <Grid item xs>
-                {/* <Link >
-                  Forgot password?
-                </Link> */}
+                <CustomLink message='Forgot Password' handleLink={handlePassword}/>
               </Grid>
               <Grid item>
                 <Link to='/signup'> 
