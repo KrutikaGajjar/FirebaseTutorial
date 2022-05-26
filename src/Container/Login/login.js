@@ -10,9 +10,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router'
 import AlertBox from '../../Components/Alert/alert';
-import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { auth,provider } from '../../firebase';
 import CustomLink from '../../Components/Link/customLink';
+import './login.css'
+import GooogleImage from '../../assets/google.png'
 
 const theme = createTheme();
 export default function Login() {
@@ -55,6 +57,16 @@ const handleSubmit = (event) => {
     })
   }
     
+  const handleGoogleButton = () => {
+    signInWithPopup(auth, provider).then(result => {
+      console.log(result)
+      router('/')
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -115,7 +127,9 @@ const handleSubmit = (event) => {
                 </Link>
               </Grid>
             </Grid>
+            
           </Box>
+          <button className='google_button' onClick={handleGoogleButton}><img src={GooogleImage} alt=''/></button>
         </Box>
       </Container>
     </ThemeProvider>

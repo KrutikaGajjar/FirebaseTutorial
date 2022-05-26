@@ -15,7 +15,6 @@ import { auth } from '../../firebase'
 import { useNavigate } from 'react-router'
 import AlertBox from '../../Components/Alert/alert';
 
-
 const theme = createTheme();
 
 export default function Signup() {
@@ -34,11 +33,11 @@ export default function Signup() {
     event.preventDefault();
     createUserWithEmailAndPassword(auth, userInfo.email,userInfo.password)
       .then((userInformation) => {
-         console.log(userInformation, userInformation.user)
          updateProfile(auth.currentUser, {
           displayName:userInfo.userName
          })
         sendEmailVerification(auth.currentUser)
+        console.log(userInformation, userInformation.user)
         router('/')
       })
       .catch(error => {
