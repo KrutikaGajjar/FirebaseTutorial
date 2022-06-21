@@ -1,6 +1,6 @@
 
 import { Box } from '@mui/system'
-import { collection, getDocs} from 'firebase/firestore'
+import { collection, getDocs, onSnapshot} from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import CustomCard from '../../Components/Cards/customCard'
 import { db } from '../../firebase'
@@ -21,14 +21,24 @@ export default function Dashboard() {
   useEffect(() => {
     const collRef = collection(db, 'Events');
     let data=[]
-    getDocs(collRef).then((querySnapshot) => {
-       querySnapshot.forEach(query => {
+    const unsubs = onSnapshot(collRef, (querySnapshot) => {
+      console.log(querySnapshot,typeof querySnapshot)
+      querySnapshot.forEach(query => {
         console.log("query is", query.data(), query.id)
         data.push({...query.data(),id:query.id})
       })
       console.log("data",data)
       setEventData(data);
     })
+    return unsubs
+    // getDocs(collRef).then((querySnapshot) => {
+    //    querySnapshot.forEach(query => {
+    //     console.log("query is", query.data(), query.id)
+    //     data.push({...query.data(),id:query.id})
+    //   })
+    //   console.log("data",data)
+    //   setEventData(data);
+    //})
   },[])
 
     return (
