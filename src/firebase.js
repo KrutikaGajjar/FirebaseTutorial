@@ -7,12 +7,13 @@ import { getFirestore } from 'firebase/firestore'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDSTFZEsq8QTqsrzGXoVX9BZBoGpKFx9XA",
-  authDomain: "fir-tutorial-aec37.firebaseapp.com",
-  projectId: "fir-tutorial-aec37",
-  storageBucket: "fir-tutorial-aec37.appspot.com",
-  messagingSenderId: "929895276184",
-  appId: "1:929895276184:web:4a69a2c47745717090faed"
+  apiKey: "AIzaSyBTSy1P8MgEFsfeuHhcoVmIWBoVvrzcj8Y",
+  authDomain: "health-warden-eba5e.firebaseapp.com",
+  projectId: "health-warden-eba5e",
+  storageBucket: "health-warden-eba5e.appspot.com",
+  messagingSenderId: "246819324915",
+  appId: "1:246819324915:web:a43746cb0abb6263a74886",
+  measurementId: "G-NHHSPDXTCV"
 };
 
 // Initialize Firebase

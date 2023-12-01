@@ -12,7 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {  createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router' 
 import AlertBox from '../../Components/Alert/alert';
 
 const theme = createTheme();

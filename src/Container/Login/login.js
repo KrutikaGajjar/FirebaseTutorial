@@ -16,7 +16,7 @@ import CustomLink from '../../Components/Link/customLink';
 import './login.css'
 import GooogleImage from '../../assets/google.png'
 
-const theme = createTheme();
+const theme = createTheme(); 
 export default function Login() {
 
   const [userInfo, setUserInfo] = useState({ email: '', password: '' });

@@ -11,8 +11,8 @@ function App() {
   const location = useLocation();
 
   return (
-    <div className={`${!(location.pathname === '/login') ? 'Container' :''}`}>
-      {!(location.pathname ==='/login') &&  
+    <div className={`${!(location.pathname === '/Signup') ? 'Container' :''}`}>
+      {!(location.pathname ==='/Signup') &&  
         <CustomDrawer />
        }
      
